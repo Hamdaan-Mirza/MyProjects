@@ -1,0 +1,7 @@
+Django>=4.2
+djangorestframework
+pymongo
+python-dotenv
+celery[redis]
+playwright
+gunicorn
