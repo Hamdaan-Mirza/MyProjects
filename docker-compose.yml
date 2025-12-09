@@ -1,31 +1,34 @@
-# version: '3.8'
-# services:
-#   mongo:
-#     image: mongo:6
-#     volumes:
-#       - mongo-data:/data/db
-      
-#   redis:
-#     image: redis:7
-#   backend:
-#     build: ./backend
-#     environment:
-#       - MONGO_URI=mongodb://mongo:27017
-#       - REDIS_URL=redis://redis:6379
-#     ports:
-#       - "8000:8000"
-#     depends_on: [mongo, redis]
-#   worker:
-#     build: ./worker
-#     environment:
-#       - MONGO_URI=mongodb://mongo:27017
-#     depends_on: [mongo]
-#   frontend:
-#     build: ./frontend
-
-
-#     ports:
-#       - "3000:3000"
-#     depends_on: [backend]
-# volumes:
-#   mongo-data:
+version: '3.8'
+services:
+  mongo:
+    image: mongo:6
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+  redis:
+    image: redis:7
+    restart: unless-stopped
+  backend:
+    build: ./backend
+    env_file: .env
+    environment:
+      - MONGO_URI=${MONGO_URI}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DJANGO_DEBUG=${DJANGO_DEBUG}
+      - REDIS_URL=${REDIS_URL}
+    ports:
+      - "8000:8000"
+    depends_on: [mongo, redis]
+  worker:
+    build: ./worker
+    env_file: .env
+    environment:
+      - MONGO_URI=${MONGO_URI}
+    depends_on: [mongo]
+  frontend:
+    build: ./frontend
+    ports:
+    - "3000:3000"
+    depends_on: [backend]
+  volumes:
+    mongo-data:

@@ -1,0 +1,9 @@
+{
+"name": "example-listings",
+"url": "https://example.com/listings",
+"selectors": {
+"item": ".item",
+"title": ".title",
+"link": ".title a"
+    }
+}
