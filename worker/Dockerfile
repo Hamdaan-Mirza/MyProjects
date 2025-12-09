@@ -5,4 +5,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY worker/ .
 # Playwright browser binaries
 RUN playwright install --with-deps
-CMD ["python", "scraper/simple_scraper.py"]
+CMD ["python", "scraper/scraper.py"]

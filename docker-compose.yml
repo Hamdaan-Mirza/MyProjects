@@ -28,7 +28,8 @@ services:
   frontend:
     build: ./frontend
     ports:
-    - "3000:3000"
+      - "3000:3000"
     depends_on: [backend]
-  volumes:
-    mongo-data:
+
+volumes:
+  mongo-data:
