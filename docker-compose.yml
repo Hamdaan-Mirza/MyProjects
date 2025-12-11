@@ -19,6 +19,15 @@ services:
     ports:
       - "8000:8000"
     depends_on: [mongo, redis]
+  celery:
+    build: ./backend
+    command: celery -A project worker --loglevel=info
+    env_file: .env
+    environment:
+      - MONGO_URI=${MONGO_URI}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - REDIS_URL=${REDIS_URL}
+    depends_on: [mongo, redis]
   worker:
     build: ./worker
     env_file: .env
