@@ -1,12 +1,17 @@
 """
 Worker polling loop - reads jobs from MongoDB and executes scraper.
 """
+
 import time
 import asyncio
 import os
 from pymongo import MongoClient
 from datetime import datetime
-from simple_scraper import scrape
+
+# IMPORTS: Rename your original scraper to 'scrape_simple' to verify which one is running
+from simple_scraper import scrape as scrape_simple
+# IMPORT: The new Google Maps scraper we designed
+from google_maps_scraper import scrape_google_maps
 
 
 MONGO_URI = os.getenv('MONGO_URI', 'mongodb://mongo:27017/scraper_db')
@@ -35,15 +40,33 @@ def poll_and_run():
                 print(f"Processing job {job_id}: {job_data}")
                 
                 try:
-                    # Extract job config
-                    url = job_data.get('url')
-                    selectors = job_data.get('selectors', {})
+                    # --- ROUTING LOGIC START ---
+                    # Check the 'type' field in the job payload. Default to 'simple' for backward compatibility.
+                    job_type = job_data.get('type', 'simple')
                     
-                    if not url or not selectors:
-                        raise ValueError("Job missing url or selectors")
-                    
-                    # Run the scraper
-                    asyncio.run(scrape(url, selectors))
+                    if job_type == 'google_maps':
+                        # Validating specific fields for Google Maps
+                        query = job_data.get('query')
+                        # Default to 10 if not provided
+                        limit = int(job_data.get('limit', 10)) 
+                        
+                        if not query:
+                            raise ValueError("Google Maps job missing 'query' parameter")
+                            
+                        print(f"Running Google Maps scraper for: {query}")
+                        asyncio.run(scrape_google_maps(query, limit))
+
+                    else:
+                        # Existing Simple Scraper Logic (Generic)
+                        url = job_data.get('url')
+                        selectors = job_data.get('selectors', {})
+                        
+                        if not url or not selectors:
+                            raise ValueError("Simple job missing 'url' or 'selectors'")
+                        
+                        print(f"Running Simple scraper for: {url}")
+                        asyncio.run(scrape_simple(url, selectors))
+                    # --- ROUTING LOGIC END ---
                     
                     # Mark as completed
                     jobs_col.update_one(
