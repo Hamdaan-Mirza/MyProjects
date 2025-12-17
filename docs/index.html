@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Local Leads Scraper Service</title>
+  <meta name="description" content="Get clean CSV lists of businesses by city/category. Fast delivery, deduped, tailored to your query." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0b1220;--text:#e6eaf2;--muted:#9aa3b2;--panel:#10192b;--border:#1f2a44;--primary:#4f8cff;--success:#22c55e}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI}
+    .wrap{max-width:1000px;margin:0 auto;padding:40px 20px}
+    .hero{display:flex;justify-content:space-between;align-items:center;gap:24px}
+    .hero h1{font-size:28px;margin:0}
+    .hero p{color:var(--muted)}
+    .cta{display:flex;gap:12px;margin-top:18px}
+    .btn{padding:12px 16px;border-radius:10px;border:1px solid var(--border);background:#0e162b;color:#fff;cursor:pointer}
+    .btn-primary{background:var(--primary);border-color:#3b74da}
+    .panel{margin-top:28px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px}
+    .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .plan{background:#0e162b;border:1px solid var(--border);border-radius:12px;padding:16px}
+    .plan h3{margin:0 0 8px 0}
+    .price{font-size:22px;margin:10px 0}
+    ul{padding-left:18px}
+    footer{margin-top:30px;color:var(--muted);display:flex;justify-content:space-between}
+    a{color:#9ec1ff}
+    .form{display:grid;gap:10px;margin-top:20px}
+    input,select,textarea{padding:10px;border-radius:10px;border:1px solid var(--border);background:#0e162b;color:#fff}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <h1>Local Leads Scraper Service</h1>
+        <p>Get clean CSV lists of businesses by city/category. Fast delivery, deduped, and tailored to your query.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#order">Order a Dataset</a>
+          <a class="btn" href="#pricing">View Pricing</a>
+          <a class="btn btn-primary" href="https://www.paypal.com/paypalme/REPLACE_USERNAME/120" target="_blank" rel="noopener">Checkout</a>
+        </div>
+      </div>
+      <img src="https://cdn.jsdelivr.net/gh/tabler/tabler-icons/icons/building-store.svg" alt="" width="96" />
+    </div>
+
+    <div class="panel" id="pricing">
+      <h2>Pricing</h2>
+      <div class="plans">
+        <div class="plan">
+          <h3>Starter</h3>
+          <div class="price">R120</div>
+          <ul>
+            <li>200 listings</li>
+            <li>CSV delivery</li>
+            <li>Basic deduplication</li>
+          </ul>
+        </div>
+        <div class="plan">
+          <h3>Growth</h3>
+          <div class="price">R240</div>
+          <ul>
+            <li>500 listings</li>
+            <li>CSV + custom filters</li>
+            <li>Two queries included</li>
+          </ul>
+        </div>
+        <div class="plan">
+          <h3>Pro</h3>
+          <div class="price">R480</div>
+          <ul>
+            <li>1,200 listings</li>
+            <li>CSV + webhooks</li>
+            <li>Priority delivery</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="order">
+      <h2>Order Form</h2>
+      <p>Fill this and we'll email you with delivery + payment link.</p>
+      <!-- Tip: Replace the Checkout button URL above with Stripe, Gumroad, or PayPal. -->
+      <form class="form" action="https://formspree.io/f/xbjvkvyp" method="POST">
+        <input name="email" aria-label="Email address" type="email" placeholder="Your email" required />
+        <input name="query" aria-label="Search query" placeholder="Query..." required />
+        <select name="size" aria-label="Choose a package plan">
+          <option value="200">200 listings (R120)</option>
+          <option value="500">500 listings (R240)</option>
+          <option value="1200">1200 listings (R480)</option>
+        </select>
+        <textarea name="notes" rows="4" placeholder="Any filters or notes (optional)"></textarea>
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </div>
+
+    <footer>
+      <span>© 2025 Local Leads Scraper</span>
+      <span><a href="#">Terms</a> • <a href="#">Privacy</a></span>
+    </footer>
+  </div>
+</body>
+</html>
