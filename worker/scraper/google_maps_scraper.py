@@ -85,3 +85,4 @@ async def scrape_google_maps(search_query, total_needed=10):
             print(f"Scraped {items_scraped}/{total_needed}...")
 
         await browser.close()
+    return items_scraped

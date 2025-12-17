@@ -54,7 +54,7 @@ def poll_and_run():
                             raise ValueError("Google Maps job missing 'query' parameter")
                             
                         print(f"Running Google Maps scraper for: {query}")
-                        asyncio.run(scrape_google_maps(query, limit))
+                        count = asyncio.run(scrape_google_maps(query, limit))
 
                     else:
                         # Existing Simple Scraper Logic (Generic)
@@ -65,13 +65,13 @@ def poll_and_run():
                             raise ValueError("Simple job missing 'url' or 'selectors'")
                         
                         print(f"Running Simple scraper for: {url}")
-                        asyncio.run(scrape_simple(url, selectors))
+                        count = asyncio.run(scrape_simple(url, selectors))
                     # --- ROUTING LOGIC END ---
                     
                     # Mark as completed
                     jobs_col.update_one(
                         {'_id': job_doc['_id']},
-                        {'$set': {'status': 'completed', 'completed_at': datetime.utcnow()}}
+                        {'$set': {'status': 'completed', 'completed_at': datetime.utcnow(), 'count': int(count) if 'count' in locals() else None}}
                     )
                     print(f"Job {job_id} completed successfully")
                     

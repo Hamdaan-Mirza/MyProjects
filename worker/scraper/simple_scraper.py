@@ -16,6 +16,7 @@ async def scrape(url, selectors):
         page = await browser.new_page()
         await page.goto(url)
         items = await page.query_selector_all(selectors.get('item'))
+        processed = 0
         for it in items:
             try:
                 title_el = await it.query_selector(selectors['title'])
@@ -35,7 +36,9 @@ async def scrape(url, selectors):
                 'scraped_at': datetime.datetime.utcnow(),
             }
             COL.update_one({'url': link}, {'$set': doc, '$setOnInsert': {'first_seen': datetime.datetime.utcnow()}}, upsert=True)
+            processed += 1
         await browser.close()
+    return processed
 
 
 if __name__ == '__main__':
